@@ -1,32 +1,61 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div class="container">
+    <Header />
+    <div class="row">
+      <div class="col-md-12">
+        <transition name="main" mode="out-in">
+        <router-view></router-view>
+        </transition>
+        
+      </div>
     </div>
-    <router-view />
   </div>
 </template>
 
+<script>
+import Header from "./components/Header.vue";
+export default {
+  components: {
+    Header
+  },
+  created() {
+    this.$store.dispatch("initStocks");
+  }
+};
+</script>
+
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+body {
+  padding-top: 30px;
 }
 
-#nav {
-  padding: 30px;
+.main-enter-active {
+animation: slide-in 0.2s ease-out forwards;
 }
 
-#nav a {
-  font-weight: bold;
-  color: #2c3e50;
+.main-leave-active {
+animation: slide-out 0.2s ease-out forwards;
 }
 
-#nav a.router-link-exact-active {
-  color: #42b983;
+@keyframes slide-in {
+  from {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-30px);
+    opacity: 0;
+  }
 }
 </style>
